@@ -6,6 +6,9 @@ MAINTAINER olga.botvinnik@czbiohub.org
 COPY openmpi-hostfile-aws /usr/local/etc/
 RUN ls -lha /usr/local/etc/openmpi*
 
+# Allow for ptrace to inspect child processes
+RUN bash -c "echo 0 > /proc/sys/kernel/yama/ptrace_scope"
+
 # Change to "main" so that openmpi doesn't complain about running as root
 # Add user "main" because that's what is expected by this image
 RUN useradd -ms /bin/bash main
